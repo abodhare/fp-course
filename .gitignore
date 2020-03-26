@@ -42,3 +42,6 @@ ops/*.retry
 
 # HSpec
 .hspec-failures
+
+# hi, ho
+*.hi, *.o
