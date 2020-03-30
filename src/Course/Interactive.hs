@@ -82,9 +82,10 @@ data Op =
 -- /Tip:/ @putStrLn :: String -> IO ()@ -- Prints a string and then a new line to standard output.
 convertInteractive ::
   IO ()
-convertInteractive =
-  error "todo: Course.Interactive#convertInteractive"
-
+convertInteractive = 
+    vooid (putStr "Enter a string: " >>
+    getLine >>= \s ->
+    putStrLn (map toUpper s))
 -- |
 --
 -- * Ask the user to enter a file name to reverse.
@@ -111,7 +112,12 @@ convertInteractive =
 reverseInteractive ::
   IO ()
 reverseInteractive =
-  error "todo: Course.Interactive#reverseInteractive"
+   putStr "Enter a file name: " >>
+   getLine >>= \f1 ->
+   readFile f1 >>= \c ->
+   putStr "Enter another file name: " >>
+   getLine >>= \f2 ->
+   writeFile f2 (reverse c)
 
 -- |
 --
@@ -134,10 +140,18 @@ reverseInteractive =
 -- /Tip:/ @putStr :: String -> IO ()@ -- Prints a string to standard output.
 --
 -- /Tip:/ @putStrLn :: String -> IO ()@ -- Prints a string and then a new line to standard output.
+encodeUrl :: Chars -> Chars
+encodeUrl = flatMap f
+  where f ' '  = listh "%20"
+        f '\t' = listh "%09"
+        f '"'  = listh "%22"
+        f x    = listh [x]
 encodeInteractive ::
   IO ()
 encodeInteractive =
-  error "todo: Course.Interactive#encodeInteractive"
+  putStr "Enter a string: " >>
+  getLine >>= \c ->
+  putStrLn (encodeUrl c)
 
 interactive ::
   IO ()
