@@ -112,24 +112,26 @@ constantParser =
 
 -- | Return a parser that succeeds with a character off the input or fails with an error if the input is empty.
 --
--- >>> parse character "abc"
+-- >>> parse character (listh "abc")
 -- Result >bc< 'a'
 --
--- >>> isErrorResult (parse character "")
+-- >>> isErrorResult (parse character (listh ""))
 -- True
+--
 character ::
   Parser Char
 character = P f
   where f (x:.xs)
-          | isAlpha x = Result xs x
+          | isPrint x = Result xs x
           | otherwise = UnexpectedChar x
         f Nil = UnexpectedString Nil
 
 -- | Parsers can map.
 -- Write a Functor instance for a @Parser@.
 --
--- >>> parse (toUpper <$> character) "amz"
+-- >>> parse (toUpper <$> character) (listh "amz")
 -- Result >mz< 'A'
+--
 instance Functor Parser where
   (<$>) ::
     (a -> b)
